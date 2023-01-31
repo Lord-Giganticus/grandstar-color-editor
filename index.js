@@ -13,19 +13,35 @@ reader.addEventListener('change', (e) => {
     }
 })
 
-function truncateToDecimals(num, dec = 2) {
+function truncateToDecimals(num, dec = 7) {
     const calcDec = Math.pow(10, dec);
     return Math.trunc(num * calcDec) / calcDec;
 }
 
+function handledivision(num, div = 255, digits = 7) {
+    let divd = (num / div).toFixed(digits)
+    if (divd.length < 9) {
+        return truncateToDecimals(num / div, digits)
+    } else {
+        return parseFloat(divd)
+    }
+}
+
+function toColor(num) {
+    num >>>= 0;
+    var b = num & 0xFF,
+        g = (num & 0xFF00) >>> 8,
+        r = (num & 0xFF0000) >>> 16
+    return [r, g, b]
+}
+
 cinput.addEventListener('change', (e) => {
     let color = e.target.value
-    let r = parseFloat(color.substr(1,2), 16)
-    let g = parseFloat(color.substr(3,2), 16)
-    let b = parseFloat(color.substr(5,2), 16)
-    r = truncateToDecimals(r / 255, 7)
-    g = truncateToDecimals(g / 255, 7)
-    b = truncateToDecimals(b / 255, 7)
+    let [r, g, b] = toColor(Number.parseInt(color.substr(1), 16))
+    r = handledivision(r)
+    g = handledivision(g)
+    b = handledivision(b)
+    console.log([r, g, b])
     if (json !== undefined) {
         json[1].TevColors[0].R = r
         json[1].TevColors[0].G = g
