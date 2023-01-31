@@ -24,8 +24,8 @@ cinput.addEventListener('change', (e) => {
     let g = parseFloat(color.substr(3,2), 16)
     let b = parseFloat(color.substr(5,2), 16)
     r = truncateToDecimals(r / 255, 7)
-    g = truncateToDecimals(g / 255)
-    b = truncateToDecimals(b / 255)
+    g = truncateToDecimals(g / 255, 7)
+    b = truncateToDecimals(b / 255, 7)
     if (json !== undefined) {
         json[1].TevColors[0].R = r
         json[1].TevColors[0].G = g
